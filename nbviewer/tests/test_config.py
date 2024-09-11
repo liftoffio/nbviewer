@@ -20,5 +20,4 @@ class TemplatePathCLITestCase(NBViewerTestCase, CustomTemplateStub):
 
 
 class TemplatePathEnvTestCase(NBViewerTestCase, CustomTemplateStub):
-
     environment_variables = {"NBVIEWER_TEMPLATE_PATH": tmpl_fixture}

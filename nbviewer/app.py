@@ -82,7 +82,6 @@ FRONTPAGE_JSON = os.path.join(this_dir, "frontpage.json")
 
 
 class NBViewer(Application):
-
     name = Unicode("NBViewer")
 
     aliases = Dict(  # type: ignore
@@ -645,7 +644,7 @@ class NBViewer(Application):
             self.providers,
             self._base_url,
             self.localfiles,
-            **handler_kwargs
+            **handler_kwargs,
         )
 
         # NBConvert config
@@ -713,7 +712,6 @@ class NBViewer(Application):
         self.tornado_application = web.Application(handlers, **settings)
 
     def init_logging(self):
-
         # Note that we inherit a self.log attribute from traitlets.config.Application
         # https://github.com/ipython/traitlets/blob/master/traitlets/config/application.py#L209
         # as well as a log_level attribute

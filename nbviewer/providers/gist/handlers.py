@@ -17,7 +17,6 @@ from ..github.handlers import GithubClientMixin
 
 
 class GistClientMixin(GithubClientMixin):
-
     # PROVIDER_CTX is a dictionary whose entries are passed as keyword arguments
     # to the render_template method of the GistHandler. The following describe
     # the information contained in each of these keyword arguments:
@@ -69,7 +68,7 @@ class UserGistsHandler(GistClientMixin, BaseHandler):
             prev_url=prev_url,
             next_url=next_url,
             **self.PROVIDER_CTX,
-            **namespace
+            **namespace,
         )
 
     @cached
@@ -107,7 +106,7 @@ class UserGistsHandler(GistClientMixin, BaseHandler):
             provider_url=provider_url,
             prev_url=prev_url,
             next_url=next_url,
-            **namespace
+            **namespace,
         )
         await self.cache_and_finish(html)
 
@@ -116,7 +115,6 @@ class GistHandler(GistClientMixin, RenderingHandler):
     """render a gist notebook, or list files if a multifile gist"""
 
     async def parse_gist(self, user, gist_id, filename=""):
-
         with self.catch_client_error():
             response = await self.github_client.get_gist(gist_id)
 
@@ -205,7 +203,7 @@ class GistHandler(GistClientMixin, RenderingHandler):
             user=user.rstrip("/"),
             provider_url=gist["html_url"],
             executor_url=executor_url,
-            **self.PROVIDER_CTX
+            **self.PROVIDER_CTX,
         )
         await self.cache_and_finish(html)
 
@@ -280,7 +278,7 @@ class GistHandler(GistClientMixin, RenderingHandler):
             public=gist["public"],
             provider_url=gist["html_url"],
             executor_url=executor_url,
-            **self.PROVIDER_CTX
+            **self.PROVIDER_CTX,
         )
 
     @cached
