@@ -114,7 +114,7 @@ If they are installed, you can install the required Python packages via pip.
 
 ```shell
 $ cd <path to repo>
-$ pip install -r requirements.txt
+$ pip install -r requirements-lock.txt
 ```
 
 #### Static Assets

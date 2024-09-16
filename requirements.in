@@ -6,7 +6,6 @@ markdown>=3.0,==3.1.1 # pin until we workaround #909, which is a regression in 3
 nbconvert>=6.5.4
 nbformat>=5.0
 newrelic!=2.80.0.60
-pycurl
 pylibmc
 statsd
 tornado>=6.0

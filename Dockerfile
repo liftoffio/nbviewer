@@ -6,7 +6,6 @@ ENV LANG=C.UTF-8
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     ca-certificates \
-    libcurl4-gnutls-dev \
     libgnutls28-dev \
     libmemcached-dev \
     git \
@@ -22,7 +21,7 @@ WORKDIR /srv/nbviewer
 # Copy source tree in
 COPY . /srv/nbviewer
 RUN python3 setup.py build && \
-    python3 -mpip wheel -vv -r requirements.txt . -w /wheels
+    python3 -mpip wheel -vv -r requirements-lock.txt . -w /wheels
 
 # Now define the runtime image
 FROM python:3.10-slim-bullseye
@@ -34,7 +33,6 @@ ENV LANG=C.UTF-8
 RUN apt-get update \
  && apt-get install -yq --no-install-recommends \
     ca-certificates \
-    libcurl4 \
     libmemcached11 \
     git \
  && apt-get clean && rm -rf /var/lib/apt/lists/*

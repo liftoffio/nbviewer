@@ -13,37 +13,24 @@ from datetime import datetime
 from functools import wraps
 from html import escape
 from http.client import responses
-from urllib.parse import quote
-from urllib.parse import urlencode
-from urllib.parse import urlparse
-from urllib.parse import urlunparse
+from urllib.parse import quote, urlencode, urlparse, urlunparse
 
 import statsd  # type: ignore
-from nbformat import current_nbformat  # type:ignore
-from nbformat import reads
-from tornado import httpclient
-from tornado import web
+from nbformat import (
+    current_nbformat,  # type:ignore
+    reads,
+)
+from tornado import httpclient, web
 from tornado.concurrent import Future
-from tornado.escape import url_escape
-from tornado.escape import url_unescape
-from tornado.escape import utf8
+from tornado.escape import url_escape, url_unescape, utf8
 from tornado.ioloop import IOLoop
 
-from ..render import NbFormatError
-from ..render import render_notebook
-from ..utils import EmptyClass
-from ..utils import parse_header_links
-from ..utils import time_block
-from ..utils import url_path_join
+from ..render import NbFormatError, render_notebook
+from ..utils import EmptyClass, parse_header_links, time_block, url_path_join
 
-try:
-    import pycurl
-    from tornado.curl_httpclient import CurlError
-except ModuleNotFoundError:
-    pycurl = None  # type: ignore
 
-    class CurlError(Exception):  # type: ignore
-        pass
+class CurlError(Exception):  # type: ignore
+    pass
 
 
 format_prefix = "/format/"
@@ -348,14 +335,11 @@ class BaseHandler(web.RequestHandler):
 
         # Now get the error code
         if exc.code == 599:
-            if isinstance(exc, CurlError):
-                en = getattr(exc, "errno", -1)
-                # can't connect to server should be 404
-                # possibly more here
-                if en in (pycurl.E_COULDNT_CONNECT, pycurl.E_COULDNT_RESOLVE_HOST):
-                    code = 404
-            # otherwise, raise 400 with informative message:
-            code = 400
+            if isinstance(exc, httpclient.HTTPError):
+                code = exc.code
+            else:
+                # otherwise, raise 400 with informative message:
+                code = 400
         elif exc.code >= 500:
             # 5XX, server error, but not this server
             code = 502

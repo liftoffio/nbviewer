@@ -11,8 +11,7 @@ import hashlib
 import pickle
 import time
 
-from tornado.curl_httpclient import CurlAsyncHTTPClient
-from tornado.httpclient import HTTPRequest
+from tornado.httpclient import HTTPClient, HTTPRequest
 
 from nbviewer.utils import time_block
 
@@ -27,7 +26,7 @@ from nbviewer.utils import time_block
 cache_headers = {"ETag": "If-None-Match", "Last-Modified": "If-Modified-Since"}
 
 
-class NBViewerAsyncHTTPClient(object):
+class NBViewerAsyncHTTPClient:
     """Subclass of AsyncHTTPClient with bonus logging and caching!
 
     If upstream servers support 304 cache replies with the following headers:
@@ -48,7 +47,7 @@ class NBViewerAsyncHTTPClient(object):
 
     def __init__(self, log, client=None):
         self.log = log
-        self.client = client or CurlAsyncHTTPClient()
+        self.client = client or HTTPClient()
 
     def fetch(self, url, params=None, **kwargs):
         request = HTTPRequest(url, **kwargs)

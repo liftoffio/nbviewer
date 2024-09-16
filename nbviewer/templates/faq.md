@@ -64,7 +64,7 @@ Binder. Binder does support other providers directly on the mybinder.org site.
 
 Binder tries to build a Docker image containing the notebooks and requirements
 declared in a git repository. The build will fail if the repository has
-a `Dockerfile`, `requirements.txt`, `environment.yaml`, etc. with issues. We
+a `Dockerfile`, `requirements-lock.txt`, `environment.yaml`, etc. with issues. We
 suggest letting the repository owner know about the problem or submitting a
 pull request to help fix it.
 

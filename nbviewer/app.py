@@ -8,50 +8,32 @@ import io
 import json
 import logging
 import os
-from concurrent.futures import ProcessPoolExecutor
-from concurrent.futures import ThreadPoolExecutor
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
 from functools import cached_property
 from html import escape
 from urllib.parse import urlparse
 
 import markdown
-from jinja2 import Environment
-from jinja2 import FileSystemLoader
-from jupyter_server.base.handlers import FileFindHandler as StaticFileHandler  # type: ignore
+from jinja2 import Environment, FileSystemLoader
+from jupyter_server.base.handlers import (
+    FileFindHandler as StaticFileHandler,  # type: ignore
+)
 from nbconvert import get_exporter  # type: ignore
 from nbconvert.exporters.templateexporter import ExtensionTolerantLoader  # type: ignore
-from tornado import httpserver
-from tornado import ioloop
-from tornado import web
-from tornado.curl_httpclient import curl_log
-from tornado.log import access_log
-from tornado.log import app_log
-from tornado.log import LogFormatter
-from traitlets import Any
-from traitlets import Bool
-from traitlets import default
-from traitlets import Dict
-from traitlets import Int
-from traitlets import List
-from traitlets import Set
-from traitlets import Unicode
+from tornado import httpserver, ioloop, web
+from tornado.log import LogFormatter, access_log, app_log
+from traitlets import Any, Bool, Dict, Int, List, Set, Unicode, default
 from traitlets.config import Application
 
-from .cache import AsyncMultipartMemcache
-from .cache import DummyAsyncCache
-from .cache import MockCache
-from .cache import pylibmc
+from .cache import AsyncMultipartMemcache, DummyAsyncCache, MockCache, pylibmc
 from .client import NBViewerAsyncHTTPClient as HTTPClientClass
 from .formats import default_formats
 from .handlers import init_handlers
 from .index import NoSearch
 from .log import log_request
-from .providers import default_providers
-from .providers import default_rewrites
+from .providers import default_providers, default_rewrites
 from .ratelimit import RateLimiter
-from .utils import git_info
-from .utils import jupyter_info
-from .utils import url_path_join
+from .utils import git_info, jupyter_info, url_path_join
 
 # -----------------------------------------------------------------------------
 # Code
@@ -724,15 +706,12 @@ class NBViewer(Application):
 
         tornado_log = logging.getLogger("tornado")
         # hook up tornado's loggers to our app handlers
-        for log in (app_log, access_log, tornado_log, curl_log):
+        for log in (app_log, access_log, tornado_log):
             # ensure all log statements identify the application they come from
             log.name = self.log.name
             log.parent = self.log
             log.propagate = True
             log.setLevel(self.log_level)
-
-        # disable curl debug, which logs all headers, info for upstream requests, which is TOO MUCH
-        curl_log.setLevel(max(self.log_level, logging.INFO))
 
     # Mostly copied from JupyterHub because if it isn't broken then don't fix it.
     def write_config_file(self):
