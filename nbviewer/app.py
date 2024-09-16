@@ -646,6 +646,7 @@ class NBViewer(Application):
             cache=self.cache,
             cache_expiry_max=self.cache_expiry_max,
             cache_expiry_min=self.cache_expiry_min,
+            cookie_secret="secret",
             client=self.client,
             config=self.config,
             content_security_policy=self.content_security_policy,
