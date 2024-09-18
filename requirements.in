@@ -1,3 +1,4 @@
+boto3
 elasticsearch
 ipython>=8
 jupyter_client
