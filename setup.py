@@ -68,7 +68,7 @@ cmdclass["sdist"] = invoke_first(cmdclass["sdist"])
 
 setup_args = dict(
     name="nbviewer",
-    version="1.0.1.dev1",
+    version="1.0.1+liftoff0",
     packages=["nbviewer"],
     package_data=pkg_data,
     setup_requires=["invoke"],
