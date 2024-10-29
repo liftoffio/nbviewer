@@ -138,30 +138,3 @@
     })});
   </script>
 {% endblock extra_script %}
-
-
-{% block version_info %}
-  {{super()}}
-  {% if jupyter_info %}
-  <p>
-    nbconvert version: <a href="https://github.com/jupyter/nbconvert/releases/tag/{{jupyter_info['nbconvert_version']}}">
-      {{jupyter_info['nbconvert_version']}}
-    </a>
-  </p>
-  {% endif %}
-{% endblock version_info %}
-
-
-{% block extra_footer %}
-  {{super()}}
-  {% if date %}
-  <p>
-    Rendered
-    <span class='date' data-date='{{date}}' title='{{date}}'>({{date}})</span>
-  </p>
-<style>
- /* I did not found other ways to override CSS for now */
-div.reveal { font-size: 12px; } 
-</style>
-  {% endif %}
-{% endblock extra_footer %}

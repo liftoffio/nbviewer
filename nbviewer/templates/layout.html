@@ -45,17 +45,8 @@
   <meta name="robots" content="noindex,nofollow">
   {% endif %}
 
-  <!--NEW RELIC Start Perf Measurement-->
-  {{ nrhead() | safe }}
-  <!--NREND-->
-
   <!-- Le styles -->
   <link href="{{static_url("build/styles.css")}}" rel="stylesheet">
-
-  <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
-  <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-  <![endif]-->
 
   <!-- Le fav and touch icons -->
   <link rel="shortcut icon" href="{{ static_url("ico/ipynb_icon_16x16.png") }}">
@@ -90,18 +81,10 @@
           <span class="sr-only">Toggle navigation</span>
           <i class="fa fa-bars"></i>
         </button>
-        <a class="navbar-brand" href="{{ from_base('/') }}">
-          <img src="{{ static_url("img/nav_logo.svg") }}" width="159"/>
-        </a>
       </div>
 
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav navbar-right">
-          <li>
-            <a class="active" href="http://jupyter.org">JUPYTER</a>
-          </li>
-          {{ head_text(from_base('/faq'), "FAQ") }}
-
           {% block otherlinks %}
             {% if provider_url %}
               {{ head_icon(provider_url, "View on " + provider_label, provider_icon) }}
@@ -128,28 +111,11 @@
     <footer class="footer hidden-print">
       <div class="container">
         <div class="col-md-4">
-          <p>
-            This website does not host notebooks, it only renders notebooks
-            available on other websites.
-          </p>
-        </div>
-
-        <div class="col-md-4">
-          <p>
-            Delivered by <a href="http://www.fastly.com/">Fastly</a>,
-            Rendered by <a href="https://ovhcloud.com">OVHcloud</a>
-          </p>
-          <p>
-            nbviewer GitHub <a href="https://github.com/jupyter/nbviewer">repository</a>.
-          </p>
-        </div>
-
-        <div class="col-md-4">
           {% block version_info %}
             {% if git_data %}
               <p>
-                nbviewer version:
-                <a href="https://github.com/jupyter/nbviewer/commit/{{git_data['sha']}}">
+                version:
+                <a href="https://github.com/liftoffio/nbviewer/commit/{{git_data['sha']}}">
                   {{git_data['sha'][:7]}}
                 </a>
               </p>
@@ -166,38 +132,5 @@
   <script src="{{ static_url("components/headroom.js/dist/jQuery.headroom.min.js") }}"></script>
 
   {% block extra_script %}{% endblock %}
-
-  {% if google_analytics_id %}
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', '{{ google_analytics_id }}', 'auto',
-       {'storage': 'none'});
-    ga('set', 'anonymizeIp', true);
-    ga('send', 'pageview');
-  </script>
-  {% endif %}
-  <script>
-    require({
-        paths: {
-          moment: "{{ static_url("components/moment/min/moment.min.js") }}"
-        }
-      }, ["moment"], function(moment){
-      var date = $("footer .date"),
-        m = moment(new Date(date.data('date'))),
-        update = function(){ date.text(m.fromNow()); };
-      setInterval(update, 61*1000);
-      update();
-      var w = $(window).scroll(function(event){
-        $("body").toggleClass("scrolled", w.scrollTop() > 0);
-      });
-    });
-  </script>
-
-  <!--NEW RELIC Stop Perf Measurement-->
-  {{ nrfoot()| safe }}
-  <!--NEW RELIC End-->
 </body>
 </html>
