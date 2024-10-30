@@ -62,9 +62,4 @@ def default_formats():
             "icon": "gift",
             "test": test_slides,
         },
-        "script": {
-            "label": "Code",
-            "icon": "code",
-            "content_type": "text/plain; charset=UTF-8",
-        },
     }
