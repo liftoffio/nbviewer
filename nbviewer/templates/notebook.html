@@ -42,6 +42,12 @@
 
   {% block style_base %}
     <link href="{{ static_url("build/notebook.css") }}" rel="stylesheet">
+	<style>
+		/* Hack to prevent the cell index squish */
+		.jp-InputArea {
+			width: unset !important;
+		}
+	</style>
   {% endblock %}
 
   {% if css_theme %}
