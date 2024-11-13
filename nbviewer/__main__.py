@@ -1,3 +1,5 @@
+import asyncio
+
 from nbviewer.app import main
 
-main()
+asyncio.run(main())

@@ -11,7 +11,7 @@ import hashlib
 import pickle
 import time
 
-from tornado.httpclient import HTTPClient, HTTPRequest
+from tornado.httpclient import AsyncHTTPClient, HTTPRequest
 
 from nbviewer.utils import time_block
 
@@ -47,7 +47,7 @@ class NBViewerAsyncHTTPClient:
 
     def __init__(self, log, client=None):
         self.log = log
-        self.client = client or HTTPClient()
+        self.client = client or AsyncHTTPClient()
 
     def fetch(self, url, params=None, **kwargs):
         request = HTTPRequest(url, **kwargs)
