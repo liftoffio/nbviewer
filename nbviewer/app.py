@@ -642,7 +642,6 @@ class NBViewer(Application):
             fetch_kwargs=self.fetch_kwargs,
             formats=self.formats,
             frontpage_setup=self.frontpage_setup,
-            google_analytics_id=os.getenv("GOOGLE_ANALYTICS_ID"),
             gzip=True,
             hub_api_token=os.getenv("JUPYTERHUB_API_TOKEN"),
             hub_api_url=os.getenv("JUPYTERHUB_API_URL"),

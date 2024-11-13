@@ -275,7 +275,6 @@ class BaseHandler(web.RequestHandler):
             "mathjax_url": self.mathjax_url,
             "static_url": self.static_url,
             "from_base": self.from_base,
-            "google_analytics_id": self.settings.get("google_analytics_id"),
             "ipywidgets_base_url": self.ipywidgets_base_url,
             "jupyter_js_widgets_version": self.jupyter_js_widgets_version,
             "jupyter_widgets_html_manager_version": self.jupyter_widgets_html_manager_version,
