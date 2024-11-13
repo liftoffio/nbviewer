@@ -93,7 +93,10 @@ class NBViewer(Application):
     flags = Dict(  # type: ignore
         {
             "debug": (
-                {"Application": {"log_level": logging.DEBUG}},
+                {
+                    "Application": {"log_level": logging.DEBUG},
+                    "NBViewer": {"debug": True},
+                },
                 "Set log-level to debug, for the most verbose logging.",
             ),
             "generate-config": (
@@ -200,6 +203,10 @@ class NBViewer(Application):
     ).tag(config=True)
 
     client = Any().tag(config=True)
+
+    debug = Bool(
+        default_value=False, help="Set the Tornado application to debug mode."
+    ).tag(config=True)
 
     @default("client")
     def _default_client(self):
@@ -638,6 +645,7 @@ class NBViewer(Application):
             client=self.client,
             config=self.config,
             content_security_policy=self.content_security_policy,
+            debug=self.debug,
             default_format=self.default_format,
             fetch_kwargs=self.fetch_kwargs,
             formats=self.formats,
