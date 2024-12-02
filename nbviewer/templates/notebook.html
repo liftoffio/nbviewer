@@ -14,15 +14,88 @@
     {% endif %}
   {% endfor %}
 
-  {% if provider_url %}
-    {{ layout.head_icon(provider_url, "View on " + provider_label, provider_icon) }}
-  {% endif %}
+  <li id="execute">
+    <a title="Execute on Rush">
+      <span class="fa fa-server fa-2x menu-icon"></span>
+      <span class="menu-text">Execute on Rush</span>
+    </a>
+  </li>
 
-  {% if executor_url %}
-    {{ layout.head_icon(executor_url, "Execute on " + executor_label, executor_icon) }}
-  {% endif %}
+  <li id="spinner" hidden>
+    <a id="execute" title="Launching... (view Rush job)" target="_blank">
+      <span class="fa fa-spinner fa-spin fa-2x menu-icon"></span>
+      <span class="menu-text">Execute on Rush</span>
+    </a>
+  </li>
+
+  <li id="success" hidden>
+    <a title="Jupyter Lab">
+      <span class="fa fa-rocket fa-2x menu-icon"></span>
+      <span>Launched! (click to view)</span>
+    </a>
+  </li>
+
+
+
 
   {{ layout.head_icon(download_url, "Download Notebook", "download", True) }}
+
+  <script>
+    function pollUntilUrlIsReady(id, callback) {
+      const interval = setInterval(function() {
+        $.ajax({
+          url: '/.cloud-link',
+          data: { id: id },
+          type: 'GET',
+          success: function(result) {
+            if (result.url) {
+	      clearInterval(interval);
+	      callback(result.url);
+            }
+          }
+        });
+      }, 10000);
+    }
+
+    $('#execute').click(function() {
+      $('#execute').hide();
+      $('#spinner').show();
+      $.ajax({
+	url: '/.launch',
+	data: { path: location.pathname.slice(1) },
+	type: 'POST',
+	success: function(data) {
+	  $('#spinner a').attr('href', `https://rush.liftoff.io/jobs/${data.id}`);
+	  pollUntilUrlIsReady(data.id, function(url) {
+	    $('#spinner').hide();
+	    $('#success').show();
+	    $('#success a').attr('href', url);
+	  });
+	},
+	error: function(data) {
+	  $('#spinner').hide();
+	  $('#execute').show();
+	  alert(`Failed to launch Rush job: ${data.responseText}`);
+	}
+      });
+    });
+
+  </script>
+  <style>
+    li[hidden] {
+      display: none;
+    }
+
+    #execute {
+      cursor: pointer;
+    }
+
+    #success {
+      a {
+        color: #57de57;
+      }
+    }
+  </style>
 {% endblock %}
 
 

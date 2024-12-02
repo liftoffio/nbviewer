@@ -219,7 +219,7 @@ class NBViewer(Application):
     ).tag(config=True)
 
     content_security_policy = Unicode(
-        default_value="connect-src 'none';",
+        default_value="connect-src 'self';",
         help="Content-Security-Policy header setting.",
     ).tag(config=True)
 
