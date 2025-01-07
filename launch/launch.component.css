@@ -1,0 +1,57 @@
+button.launch {
+  border: none;
+  background-color: #e46e2e;
+  color: #fff;
+  padding: 3px 8px;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover {
+    background-color: #ff7f4d;
+  }
+  &:active {
+    background-color: #e46e2e;
+  }
+  &:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+}
+button.open {
+  border: none;
+  background-color: transparent;
+  color: #777;
+  &:hover {
+    color: #e46e2e;
+  }
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid transparent;
+  &.open {
+    background-color: #eee;
+    border: 1px solid #ddd;
+  }
+}
+
+.right-gap {
+  margin-left: 3px;
+  margin-right: 8px;
+}
+
+.launch-error {
+  color: red;
+}
+
+.launch {
+  background-color: #ffb288;
+}
+
+.fa.menu-icon {
+  top: 0;
+  line-height: 1;
+}

@@ -1,0 +1,7 @@
+[*.{ts,json,html,css}]
+indent_size = 2
+indent_style = space
+
+[.prettierrc]
+indent_size = 2
+indent_style = space

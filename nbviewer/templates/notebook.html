@@ -14,86 +14,23 @@
     {% endif %}
   {% endfor %}
 
-  <li id="execute">
-    <a title="Execute on Rush">
-      <span class="fa fa-server fa-2x menu-icon"></span>
-      <span class="menu-text">Execute on Rush</span>
-    </a>
-  </li>
-
-  <li id="spinner" hidden>
-    <a id="execute" title="Launching... (view Rush job)" target="_blank">
-      <span class="fa fa-spinner fa-spin fa-2x menu-icon"></span>
-      <span class="menu-text">Execute on Rush</span>
-    </a>
-  </li>
-
-  <li id="success" hidden>
-    <a title="Jupyter Lab">
-      <span class="fa fa-rocket fa-2x menu-icon"></span>
-      <span>Launched! (click to view)</span>
-    </a>
-  </li>
-
-
-
+  <app-launch></app-launch>
 
   {{ layout.head_icon(download_url, "Download Notebook", "download", True) }}
 
-  <script>
-    function pollUntilUrlIsReady(id, callback) {
-      const interval = setInterval(function() {
-        $.ajax({
-          url: '/.cloud-link',
-          data: { id: id },
-          type: 'GET',
-          success: function(result) {
-            if (result.url) {
-	      clearInterval(interval);
-	      callback(result.url);
-            }
-          }
-        });
-      }, 10000);
-    }
+  <script src="/static/components/launch/browser/polyfills.js" type="module"></script>
+  <script src="/static/components/launch/browser/main.js" type="module"></script>
 
-    $('#execute').click(function() {
-      $('#execute').hide();
-      $('#spinner').show();
-      $.ajax({
-	url: '/.launch',
-	data: { path: location.pathname.slice(1) },
-	type: 'POST',
-	success: function(data) {
-	  $('#spinner a').attr('href', `https://rush.liftoff.io/jobs/${data.id}`);
-	  pollUntilUrlIsReady(data.id, function(url) {
-	    $('#spinner').hide();
-	    $('#success').show();
-	    $('#success a').attr('href', url);
-	  });
-	},
-	error: function(data) {
-	  $('#spinner').hide();
-	  $('#execute').show();
-	  alert(`Failed to launch Rush job: ${data.responseText}`);
-	}
-      });
-    });
-
-  </script>
   <style>
-    li[hidden] {
-      display: none;
+    /* override bootstrap navbar styling to flow and align elements */
+    .navbar-right {
+      display: flex;
+      align-items: center;
     }
 
-    #execute {
-      cursor: pointer;
-    }
-
-    #success {
-      a {
-        color: #57de57;
-      }
+    .fa.menu-icon.fa-2x {
+      top: 0;
+      line-height: 1;
     }
   </style>
 {% endblock %}

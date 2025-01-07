@@ -1,0 +1,14 @@
+{
+  "/.pools": {
+    "target": "http://localhost:2234",
+    "secure": false
+  },
+  "/.launch": {
+    "target": "http://localhost:2234",
+    "secure": false
+  },
+  "/.cloud-link": {
+    "target": "http://localhost:2234",
+    "secure": false
+  }
+}

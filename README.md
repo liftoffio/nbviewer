@@ -7,6 +7,13 @@
 **[Configuration](#config-file-and-command-line-configuration)** |
 **[Security](#securing-the-notebook-viewer)**
 
+# Liftoff build notes
+
+```sh
+yarn
+ng build
+python setup.py bdist_wheel
+```
 
 # Jupyter Notebook Viewer
 

@@ -1,0 +1,47 @@
+<div class="wrapper" [class.open]="open()">
+  @if (open()) {
+    @if (poolsError()) {
+      <div class="error">{{ poolsError() }}</div>
+    } @else if (pools().length === 0) {
+      <span class="fa fa-spinner fa-spin fa-2x"></span>
+    } @else if (!notebookUrl()) {
+      <div>
+        Rush pool:
+        <select [(ngModel)]="selectedPool">
+          @for (pool of pools(); track pool) {
+            <option [value]="pool">{{ pool }}</option>
+          }
+        </select>
+      </div>
+      <div>
+        <button
+          (click)="launch()"
+          class="launch right-gap"
+          [disabled]="launchStatus() === 'loading'"
+        >
+          Launch
+        </button>
+      </div>
+      <div>
+        @if (launchUrl() || true) {
+          <a
+            [href]="launchUrl()"
+            target="_blank"
+            title="View launch Rush job"
+            class="right-gap fa fa-spinner fa-spin fa-2x"
+          ></a>
+        }
+        @if (launchError()) {
+          <div class="launch-error right-gap">{{ launchError() }}</div>
+        }
+      </div>
+    } @else {
+      <button class="launch right-gap">
+        <a [href]="notebookUrl()" target="_blank">Open JupyterLab</a>
+      </button>
+    }
+  }
+  <button class="open" (click)="toggleOpen()" title="Launch on Rush">
+    <span class="fa fa-server fa-2x menu-icon" [class.open]="open()"></span>
+  </button>
+</div>
