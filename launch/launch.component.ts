@@ -65,11 +65,10 @@ export class LaunchComponent {
     if (environment.development) {
       launchOptions.headers = { "X-User-Email": "kle@liftoff.io" };
     }
-    const formData = new FormData();
-    formData.append("pool", this.selectedPool());
+    const pool = this.selectedPool();
 
     this.http
-      .post<LaunchResponse>("/.launch", formData, launchOptions)
+      .post<LaunchResponse>(`/.launch?pool=${pool}`, {}, launchOptions)
       .subscribe({
         next: (res) => {
           this.launchUrl.set(`https://rush.liftoff.io/jobs/${res.id}`);
@@ -99,6 +98,6 @@ export class LaunchComponent {
           this.launchStatus.set("");
           clearInterval(intervalId);
         });
-    });
+    }, 3000);
   }
 }
