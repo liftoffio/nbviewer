@@ -12,7 +12,7 @@
 ```sh
 yarn
 ng build
-python setup.py bdist_wheel
+python -m build --wheel
 ```
 
 # Jupyter Notebook Viewer

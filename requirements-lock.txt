@@ -85,7 +85,7 @@ jupyter-server-terminals==0.5.3
     # via jupyter-server
 jupyterlab-pygments==0.3.0
     # via nbconvert
-markdown==3.1.1
+markdown==3.11.2
     # via requirements.in
 markupsafe==2.1.5
     # via jinja2
